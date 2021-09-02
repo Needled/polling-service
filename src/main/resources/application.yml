@@ -1,0 +1,18 @@
+server:
+  port: 8088
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: { db.url }
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: { db.user }
+    password: { db.pass }
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL5Dialect
+polling:
+  fixedRate: 600000 # 10 minutes
+  connection:
+    timeout: 1000git
