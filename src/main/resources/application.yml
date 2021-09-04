@@ -15,4 +15,4 @@ spring:
 polling:
   fixedRate: 600000 # 10 minutes
   connection:
-    timeout: 1000git
+    timeout: 1000

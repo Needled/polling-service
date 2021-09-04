@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin
 @RequestMapping("/kry/api")
 public class PollingServiceController {
 

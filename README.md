@@ -5,6 +5,12 @@ Web service that allows user to add services with name and url, manipulate them 
 
 # Getting Started
 
+1) Setup a MySql database and create services table as defined in the schema at src/main/resources/scripts/services_schema.sql
+2) Configure database properties in src/main/resources/application.yml with your local setup.
+3) Run as a spring boot application with: *gradlew bootRun*
+4) After starting the application, you can access the [api documentation](http://localhost:8088/swagger-ui.html)
+5) To start [front end component](http://localhost:3000), navigate to src/web and follow instructions there. 
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 

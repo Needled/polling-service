@@ -50,6 +50,7 @@ public class PollingService {
         String[] schemes = {"http","https"};
         UrlValidator urlValidator = new UrlValidator(schemes);
         if (!urlValidator.isValid(url)) {
+            log.error("Invalid url encountered: " + url);
             throw new InvalidUrlException(String.format("Url:{%s} is not a valid URL", url));
         }
     }
@@ -74,6 +75,7 @@ public class PollingService {
         if(serviceEntity.isPresent()) {
             return this.serviceConverter.buildDomainObjectFrom(serviceEntity.get());
         } else {
+            log.error(String.format("Web service with id:{%d} not found in database", id));
             throw new WebServiceNotFoundException(String.format("Web service with id:{%d} not found in database", id));
         }
     }
