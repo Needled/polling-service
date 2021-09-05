@@ -19,7 +19,7 @@ const fetchData = () => {
 const postData = (serviceName: string, url: string) => {
   return axios.post('http://localhost:8088/kry/api/services?serviceName=' + serviceName + "&url=" + encodeURIComponent(url), {})
   .then((res) => {
-    return res.data.services;
+    return res.data.services[0];
   })
   .catch((err) => {
     console.error(err);
@@ -56,22 +56,24 @@ function App() {
   }, [])
 
   const handleSubmit = (event: any) => {
-    console.log(servicename.current.value);
-    console.log(serviceurl.current.value);
+    event.preventDefault();
     postData(servicename.current.value, serviceurl.current.value)
     .then((newService: Service) => {
+      newService.status? newService.status = 'OK': newService.status = 'FAIL';
+      const tempServices: Service[] = [...services, newService];
       setServices([...services, newService]);
     })
     .catch((err) => {
       console.error(err);
     });
+    event.target.reset();
   }
 
   return (
     <div className="App">
       <div id="new-service-container">
         <h2> Add a new service </h2>
-        <form onSubmit={handleSubmit}>
+        <form id="insert-service-form" onSubmit={handleSubmit}>
           <label>
             Service Name: &nbsp;  
             <input type="text" name="servicename" ref={servicename} className="inputElement" />
