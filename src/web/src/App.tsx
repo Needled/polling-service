@@ -6,7 +6,6 @@ const fetchData = () => {
   return axios.get('http://localhost:8088/kry/api/services')
   .then((res) => {
       const services = res.data.services;
-      // console.log(services);
       services.forEach( (service: Service) => {
         service.status? service.status = 'OK': service.status = 'FAIL';
       })
@@ -20,7 +19,6 @@ const fetchData = () => {
 const postData = (serviceName: string, url: string) => {
   return axios.post('http://localhost:8088/kry/api/services?serviceName=' + serviceName + "&url=" + encodeURIComponent(url), {})
   .then((res) => {
-    console.log(res.data.services);
     return res.data.services;
   })
   .catch((err) => {
@@ -53,7 +51,7 @@ function App() {
   useEffect(() => {
     fetchData().then(services => {
       setServices(services);
-      setServiceKeys(getServicesKeys(services));
+      if(services && services.length>0) { setServiceKeys(getServicesKeys(services)); }
     });
   }, [])
 
@@ -62,7 +60,6 @@ function App() {
     console.log(serviceurl.current.value);
     postData(servicename.current.value, serviceurl.current.value)
     .then((newService: Service) => {
-      console.log(newService);
       setServices([...services, newService]);
     })
     .catch((err) => {
@@ -91,14 +88,14 @@ function App() {
       <table id="services">
         <thead>
           <tr>
-            {serviceKeys.map((key : string, keyIdx) => (<th key={keyIdx}>
+            {serviceKeys && serviceKeys.map((key : string, keyIdx) => (<th key={keyIdx}>
                 {key}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {services.map((service : Service, serviceIdx) => <tr key={serviceIdx}>
+          {services && services.map((service : Service, serviceIdx) => <tr key={serviceIdx}>
               {Object.values(service).map((value, valueIdx) => <td key={valueIdx}>
                 {value}
               </td>

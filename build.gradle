@@ -25,7 +25,7 @@ dependencies {
 	implementation 'commons-validator:commons-validator:1.7'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springdoc:springdoc-openapi-webflux-ui:1.4.3'
+	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.10'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'

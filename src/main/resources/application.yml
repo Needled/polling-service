@@ -4,10 +4,10 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: { db.url }
+    url: jdbc:mysql://localhost:3306/polling_service
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: { db.user }
-    password: { db.pass }
+    username: poller
+    password: poller
   jpa:
     hibernate:
       ddl-auto: update

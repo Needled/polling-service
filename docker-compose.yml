@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0.26
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: polling_service
+      MYSQL_USER: poller
+      MYSQL_PASSWORD: poller
+      MYSQL_ROOT_PASSWORD: root
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    volumes:
+      - ./src/main/resources/scripts/services_schema.sql:/docker-entrypoint-initdb.d/1_initdb.sql
+  polling-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: polling-service
+    tty: true
+    links:
+      - mysql
+    ports:
+      - 8088:8088
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/polling_service
+      SPRING_DATASOURCE_USERNAME: poller
+      SPRING_DATASOURCE_PASSWORD: poller
+  polling-ui:
+    build:
+      context: ./src/web
+      dockerfile: Dockerfile
+    container_name: polling-ui
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
